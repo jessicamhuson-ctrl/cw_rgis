@@ -58,7 +58,7 @@ df0 %>%
              y = y)) +
   geom_line()
 
-#Cab add multiple layers 
+#Can add multiple layers 
 df0 %>% 
   ggplot(aes(x = x,
              y = y)) +
