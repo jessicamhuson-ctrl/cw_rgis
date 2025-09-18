@@ -1,4 +1,4 @@
-if (!require(pacman)) install.packages("pacman")
+#if (!require(pacman)) install.packages("pacman")
 
 pacman::p_load(tidyverse,
                sf,
@@ -27,7 +27,7 @@ mapview(sf_site,
 
 #Now going to save or export data to use later 
 saveRDS(sf_site,
-        file = "data/sf_finsync_nc.rds")
+        file = here::here("data/sf_finsync_nc.rds"))
 
 
 ##Conversion from Geodetic CRS to Projected CRS
@@ -69,5 +69,7 @@ st_distance(sf_ft_quakes)
 
 #Save and export 
 saveRDS(sf_quakes,
-        file = here::here("data/sf_quakes.rds")
-here::here("data/data_finsync_nc.csv")
+        file = here::here("data/sf_quakes.rds"))
+
+
+
