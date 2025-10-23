@@ -73,7 +73,7 @@ sf_county_s1 <- sf_nc_county %>%
 # on a single map using `ggplot()` and `geom_sf()`.
 # Reference: Chapter 3
 ggplot() +
-  geom_sf(data = sf_county_s1)
+  geom_sf(data = sf_county_s1) 
 
 # Q10. Among the counties that contain at least one sampling site, 
 # calculate the area of each county polygon using `st_area()`. 
