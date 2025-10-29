@@ -10,7 +10,7 @@ pacman::p_load(tidyverse,
 # Q1. Read the dataset "data_finsync_nc.csv" from the data subdirectory 
 # and assign it to an object named `df_fish`.
 # Reference: Chapter 2
-df_fish <- read.csv("data/data_finsync_nc.csv")
+df_fish <- read_csv("data/data_finsync_nc.csv")
 df_fish
 
 # Q2. Using `df_fish`, create a dataframe with unique site name (`site_id`), 
@@ -40,8 +40,8 @@ sf_nc_county <- readRDS("data/sf_nc_county.rds")
 # Q5. Using the `st_join()` function, associate the county column from `sf_nc_county`
 # with each site in `sf_site`. Assign the result to `sf_site_w_county`.
 # Reference: Chapter 3
-sf_site_w_county <- st_join(x = sf_nc_county,
-                            y = sf_site)
+sf_site_w_county <- st_join(x = sf_site,
+                            y = sf_nc_county)
 print(sf_site_w_county)
 
 # Q6. Convert `sf_site_w_county` to a tibble using the `as_tibble()` function.
