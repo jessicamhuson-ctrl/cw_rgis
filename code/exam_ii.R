@@ -23,6 +23,7 @@ df_site <- read_csv("data/data_finsync_nc.csv") %>%
 
 sf_nc_county <- readRDS("data/sf_nc_county.rds")
 df_site
+
 # vector data analysis ----------------------------------------------------
 
 # Q1. 
@@ -37,7 +38,9 @@ sf_site <- st_as_sf(df_site,
 # From `sf_nc_county`, select only the county polygons of the following counties: 
 #   "guilford", "randolph", "davidson", and "forsyth". 
 # Save the result as `sf_four`.
-sf_four <- subset(sf_nc_county, tolower(county) %in% c("guilford" , "randolph" , "davidson" , "forsyth"))
+sf_nc_county
+sf_four <- sf_nc_county %>% 
+  dplyr::filter(tolower(county) %in% c("guilford" , "randolph" , "davidson" , "forsyth"))
 
 # Q3. 
 # Perform a spatial join to identify sites in `sf_site` that fall within 
@@ -48,9 +51,7 @@ sf_site_aligned <- st_transform(sf_site, st_crs(sf_four))
 
 sf_site_four <- st_join(sf_site_aligned,
                         sf_four,
-                        select("county"),
-                        join = st_within,
-                        left = FALSE)
+                        drop_na)
 # Q4. 
 # Create a map showing the four selected counties (`sf_four`) 
 #   and the sampling sites (`sf_site_four`) overlaid on the same plot. 
@@ -67,7 +68,7 @@ ggplot() +
 # 
 sf_site_four_utm <- st_transform(sf_site_four, 32617)
 
-D <- st_distance)sf_site_four_utm) 
+D <- st_distance(sf_site_four_utm) 
 diag(D) <- NA 
 max_dist <- max (D, na.rm = TRUE)
 as.numeric(max_dist)
@@ -188,4 +189,9 @@ buff_v <- vect(sf_buff_proj)
 ext_vals <- terra::extract(spr_crop_proj, buff_v, df = TRUE)
 
 df_crop_frac <- ext_vals %>% 
-  grou[_by(site_id) ]
+  group_by(site_id) %>% 
+  summarize(crop_frac = mean(spr_crop_proj, na.rm = TRUE)) %>% 
+  arrange(desc(crop_frac))
+
+df_crop_frac %>% 
+  slice(1) 
